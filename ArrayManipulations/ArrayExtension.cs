@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
 
 namespace ArrayManipulations
 {
@@ -9,6 +11,14 @@ namespace ArrayManipulations
     public interface IFilter
     {
         int[] FilterByCondition(int[] array);
+    }
+
+    /// <summary>
+    /// Interface tepresent method Compare
+    /// </summary>
+    public interface IComparator
+    {
+        int Compare(string first, string second);
     }
 
     /// <summary>
@@ -37,6 +47,41 @@ namespace ArrayManipulations
             }
 
             return filter.FilterByCondition(array);
+        }
+
+        /// <summary>
+        /// Method sorts array of strings using condition
+        /// </summary>
+        /// <param name="array">input array of strings</param>
+        /// <param name="comparator">instance of IComparator</param>
+        /// <returns>sorted array</returns>
+        /// <exception cref="System.ArgumentException">Thrown when array is empty</exception>
+        /// <exception cref="System.ArgumentNullException">Thrown when array is null</exception>
+        public static string[] Sort(this string[] array, IComparator comparator)
+        {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array), "Source array can not be null.");
+            }
+
+            if (array.Length == 0)
+            {
+                throw new ArgumentException("Source array can not be empty.", nameof(array));
+            }
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                for (int j = 0; j < array.Length - i - 1; j++)
+                {
+                    if (comparator.Compare(array[j], array[j + 1]) > 0)
+                    {
+                        string temp = array[j];
+                        array[j] = array[j + 1];
+                        array[j + 1] = temp;
+                    }
+                }
+            }
+            return array;
         }
     }
 
@@ -164,5 +209,148 @@ namespace ArrayManipulations
 
             return true;
         }
-    } 
+    }
+
+    /// <summary>
+    /// Class SortingByLengthComparator with implementation of IComparator interface
+    /// </summary>
+    public class SortingByLengthComparator : IComparator
+    {
+        /// <summary>
+        /// Method compares length two strings
+        /// </summary>
+        /// <param name="first">first string</param>
+        /// <param name="second">second string</param>
+        /// <returns>integer value</returns>
+        public int Compare(string first, string second)
+        {
+            if (first.Length == second.Length)
+            {
+                return 0;
+            }
+
+            return first.Length > second.Length ? 1 : -1;
+        }
+    }
+
+    /// <summary>
+    /// SortingByLengthDescendingComparator with implementation of IComparator interface
+    /// </summary>
+    public class SortingByLengthDescendingComparator : IComparator
+    {
+        /// <summary>
+        /// Method compares length two strings
+        /// </summary>
+        /// <param name="first">first string</param>
+        /// <param name="second">second string</param>
+        /// <returns>integer value</returns>
+        public int Compare(string first, string second)
+        {
+            if (first.Length == second.Length)
+            {
+                return 0;
+            }
+
+            return first.Length > second.Length ? -1 : 1;
+        }
+    }
+
+    /// <summary>
+    /// Abstract class NumberOfOccurrances
+    /// </summary>
+    public abstract class NumberOfOccurrances
+    {
+        /// <summary>
+        /// Method calculate the number of occurrances
+        /// </summary>
+        /// <param name="item">input string</param>
+        /// <param name="symbol">char symbol</param>
+        /// <returns>integer number of occurrances</returns>
+        protected int FindNumberOfOccurrances(string item, char symbol)
+        {
+            int occurranceNumber = 0;
+
+            for (int i = 0; i < item.Length; i++)
+            {
+                if (item[i] == symbol)
+                {
+                    occurranceNumber += 1;
+                }
+            }
+
+            return occurranceNumber;
+        }
+    }
+
+    /// <summary>
+    /// SortingByOccurranceComparator class with implementation of IComparator interface and NumberOfOccurrances class
+    /// </summary>
+    public class SortingByOccurranceComparator : NumberOfOccurrances, IComparator
+    {
+        /// <summary>
+        /// Gets or sets the value of symbol
+        /// </summary>
+        public char Symbol { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the SortingByOccurranceComparator class
+        /// </summary>
+        /// <param name="symbol">input symbol</param>
+        public SortingByOccurranceComparator(char symbol)
+        {
+            this.Symbol = symbol;
+        }
+
+        /// <summary>
+        /// Method compares numbers of occurrences of two strings
+        /// </summary>
+        /// <param name="first">first string</param>
+        /// <param name="second">second string</param>
+        /// <returns>integer value</returns>
+        public int Compare(string first, string second)
+        {
+            if (this.FindNumberOfOccurrances(first, this.Symbol) == this.FindNumberOfOccurrances(second, this.Symbol))
+            {
+                return 0;
+            }
+
+            return this.FindNumberOfOccurrances(first, this.Symbol) > this.FindNumberOfOccurrances(second, this.Symbol) ? 1 : -1;
+        }
+    }
+
+    /// <summary>
+    /// SortingByOccurranceDescendingComparator class with implementation of IComparator interface and NumberOfOccurrances class
+    /// </summary>
+    public class SortingByOccurranceDescendingComparator : NumberOfOccurrances, IComparator
+    {
+        /// <summary>
+        /// Gets or sets the value of symbol
+        /// </summary>
+        public char Symbol { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the SortingByOccurranceComparator class
+        /// </summary>
+        /// <param name="symbol">input symbol</param>
+        public SortingByOccurranceDescendingComparator(char symbol)
+        {
+            this.Symbol = symbol;
+        }
+
+        /// <summary>
+        /// Method compares numbers of occurrences of two strings
+        /// </summary>
+        /// <param name="first">first string</param>
+        /// <param name="second">second string</param>
+        /// <returns>integer value</returns>
+        public int Compare(string first, string second)
+        {
+            if (this.FindNumberOfOccurrances(first, this.Symbol) == this.FindNumberOfOccurrances(second, this.Symbol))
+            {
+                return 0;
+            }
+
+            return this.FindNumberOfOccurrances(first, this.Symbol) > this.FindNumberOfOccurrances(second, this.Symbol) ? -1 : 1;
+        }
+    }
 }

@@ -45,7 +45,53 @@ namespace ArrayManipulations.Tests
         [TestCase(new int[] { 76, -98, 355, 551, 654, 7611, 75611, -8765, 789 }, ExpectedResult = new int[] { })]
         [TestCase(new int[] { 3103013, 3013103, 103030301 }, ExpectedResult = new int[] { 3103013, 3013103, 103030301 })]
         [TestCase(new int[] { 60, 80, 990, 1177711 }, ExpectedResult = new int[] { 1177711 })]
-        public int[] Palindrome(int[] array)
+        public int[] PalindromeTest(int[] array)
             => array.Filter(new Palindrome());
+
+        [TestCase(new string[] { "none", "word", "words", "testcase", "cod", "common", "access", "clock" },
+            ExpectedResult = new string[] { "cod", "none", "word", "words", "clock", "common", "access", "testcase" })]
+        [TestCase(new string[] { "class", "cl", "c", "", "clas", "clas", "none", "cla" },
+            ExpectedResult = new string[] { "", "c", "cl", "cla", "clas", "clas", "none", "class" })]
+        [TestCase(new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " },
+            ExpectedResult = new string[] { "", "", "-", " ", "651", "io09", "09875", "-0,986", "-0ig54" })]
+        [TestCase(new string[] { "comb", "coom", "combination", "cooombinate", "/-,t", "combine", "cmb" },
+            ExpectedResult = new string[] { "com", "comb", "/-,t", "comb", "combine", "combinate", "combination" })]
+        public string[] SortingByLengthComparatorTest(string[] array)
+          => array.Sort(new SortingByLengthComparator());
+
+        [TestCase(new string[] { "none", "word", "words", "testcase", "cod", "common", "access", "clock" }, ExpectedResult = new string[] { "testcase", "common", "access", "words", "clock", "none", "word", "cod" })]
+        [TestCase(new string[] { "class", "cl", "c", "", "clas", "clas", "none", "cla" }, ExpectedResult = new string[] { "class", "clas", "clas", "none", "cla", "cl", "c", "" })]
+        [TestCase(new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " }, ExpectedResult = new string[] { "-0,986", "0ig54", "09875", "io09", "651", "-", " ", "", "" })]
+        [TestCase(new string[] { "comb", "coom", "combination", "cooombinate", "/-,t", "combine", "cmb" }, ExpectedResult = new string[] { "combination", "combinate", "combine", "comb", "/-,t", "comb", "com" })]
+        public string[] SortingByLengthDescendingComparatorTest(string[] array)
+          => array.Sort(new SortingByLengthDescendingComparator());
+
+        [TestCase(new string[] { "none", "word", "words", "testcase", "cod", "common", "access", "clock" }, 'o', ExpectedResult = new string[] { "testcase", "access", "none", "word", "words", "cod", "clock", "common" })]
+        [TestCase(new string[] { "class", "cl", "c", "", "clas", "clas", "none", "cla" }, 'a', ExpectedResult = new string[] { "cl", "c", "", "none", "class", "clas", "clas", "cla" })]
+        [TestCase(new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " }, 'j', ExpectedResult = new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " })]
+        [TestCase(new string[] { "comb", "coom", "combination", "cooombinate", "/-,t", "combine", "cmb" }, 'o', ExpectedResult = new string[] { "/-,t", "cmb", "comb", "combine", "coom", "combination", "cooombinate" })]
+        public string[] SortingByOccurranceComparatorTest(string[] array, char key)
+            => array.Sort(new SortingByOccurranceComparator(key));
+
+        [TestCase(new string[] { "none", "word", "words", "testcase", "cod", "common", "access", "clock" }, 'o', ExpectedResult = new string[] { "common", "none", "word", "words", "cod", "clock", "testcase", "access" })]
+        [TestCase(new string[] { "class", "cl", "c", "", "clas", "clas", "none", "cla" }, 'a', ExpectedResult = new string[] { "class", "clas", "clas", "cla", "cl", "c", "", "none" })]
+        [TestCase(new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " }, 'j', ExpectedResult = new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " })]
+        [TestCase(new string[] { "comb", "coom", "combination", "cooombinate", "/-,t", "combine", "cmb" }, 'o', ExpectedResult = new string[] { "cooombinate", "coom", "combination", "comb", "combine", "/-,t", "cmb" })]
+        public string[] SortingByOccurranceDescendingComparatorTest(string[] array, char key)
+            => array.Sort(new SortingByOccurranceDescendingComparator(key));
+
+        [Test]
+        public void Sort_EmptyArray_ThrowArgumentException()
+        {
+            string[] array = new string[] { };
+            Assert.Throws<ArgumentException>(() => array.Sort(new SortingByOccurranceDescendingComparator('u')));
+        }
+
+        [Test]
+        public void Sort_ArrayIsNull_ThrowArgumentNullException()
+        {
+            string[] array = null;
+            Assert.Throws<ArgumentNullException>(() => array.Sort(new SortingByOccurranceDescendingComparator('u')));
+        }
     }
 }
