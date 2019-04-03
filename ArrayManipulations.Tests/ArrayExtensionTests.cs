@@ -48,21 +48,18 @@ namespace ArrayManipulations.Tests
         public int[] PalindromeTest(int[] array)
             => array.Filter(new Palindrome());
 
-        [TestCase(new string[] { "none", "word", "words", "testcase", "cod", "common", "access", "clock" },
+        [TestCase((object)new string[] { "none", "word", "words", "testcase", "cod", "common", "access", "clock" },
             ExpectedResult = new string[] { "cod", "none", "word", "words", "clock", "common", "access", "testcase" })]
-        [TestCase(new string[] { "class", "cl", "c", "", "clas", "clas", "none", "cla" },
+        [TestCase((object)new string[] { "class", "cl", "c", "", "clas", "clas", "none", "cla" },
             ExpectedResult = new string[] { "", "c", "cl", "cla", "clas", "clas", "none", "class" })]
-        [TestCase(new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " },
+        [TestCase((object)new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " },
             ExpectedResult = new string[] { "", "", "-", " ", "651", "io09", "09875", "-0,986", "-0ig54" })]
-        [TestCase(new string[] { "comb", "coom", "combination", "cooombinate", "/-,t", "combine", "cmb" },
-            ExpectedResult = new string[] { "com", "comb", "/-,t", "comb", "combine", "combinate", "combination" })]
         public string[] SortingByLengthComparatorTest(string[] array)
           => array.Sort(new SortingByLengthComparator());
 
-        [TestCase(new string[] { "none", "word", "words", "testcase", "cod", "common", "access", "clock" }, ExpectedResult = new string[] { "testcase", "common", "access", "words", "clock", "none", "word", "cod" })]
-        [TestCase(new string[] { "class", "cl", "c", "", "clas", "clas", "none", "cla" }, ExpectedResult = new string[] { "class", "clas", "clas", "none", "cla", "cl", "c", "" })]
-        [TestCase(new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " }, ExpectedResult = new string[] { "-0,986", "0ig54", "09875", "io09", "651", "-", " ", "", "" })]
-        [TestCase(new string[] { "comb", "coom", "combination", "cooombinate", "/-,t", "combine", "cmb" }, ExpectedResult = new string[] { "combination", "combinate", "combine", "comb", "/-,t", "comb", "com" })]
+        [TestCase((object)new string[] { "none", "word", "words", "testcase", "cod", "common", "access", "clock" }, ExpectedResult = new string[] { "testcase", "common", "access", "words", "clock", "none", "word", "cod" })]
+        [TestCase((object)new string[] { "class", "cl", "c", "", "clas", "clas", "none", "cla" }, ExpectedResult = new string[] { "class", "clas", "clas", "none", "cla", "cl", "c", "" })]
+        [TestCase((object)new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " }, ExpectedResult = new string[] { "-0,986", "-0ig54", "09875", "io09", "651", "-", " ", "", "" })]
         public string[] SortingByLengthDescendingComparatorTest(string[] array)
           => array.Sort(new SortingByLengthDescendingComparator());
 
@@ -71,27 +68,39 @@ namespace ArrayManipulations.Tests
         [TestCase(new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " }, 'j', ExpectedResult = new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " })]
         [TestCase(new string[] { "comb", "coom", "combination", "cooombinate", "/-,t", "combine", "cmb" }, 'o', ExpectedResult = new string[] { "/-,t", "cmb", "comb", "combine", "coom", "combination", "cooombinate" })]
         public string[] SortingByOccurranceComparatorTest(string[] array, char key)
-            => array.Sort(new SortingByOccurranceComparator(key));
+            => array.Sort(new SortingByOccurrenceComparator(key));
 
         [TestCase(new string[] { "none", "word", "words", "testcase", "cod", "common", "access", "clock" }, 'o', ExpectedResult = new string[] { "common", "none", "word", "words", "cod", "clock", "testcase", "access" })]
         [TestCase(new string[] { "class", "cl", "c", "", "clas", "clas", "none", "cla" }, 'a', ExpectedResult = new string[] { "class", "clas", "clas", "cla", "cl", "c", "", "none" })]
         [TestCase(new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " }, 'j', ExpectedResult = new string[] { "", "-", "651", "09875", "-0,986", "io09", "-0ig54", "", " " })]
         [TestCase(new string[] { "comb", "coom", "combination", "cooombinate", "/-,t", "combine", "cmb" }, 'o', ExpectedResult = new string[] { "cooombinate", "coom", "combination", "comb", "combine", "/-,t", "cmb" })]
         public string[] SortingByOccurranceDescendingComparatorTest(string[] array, char key)
-            => array.Sort(new SortingByOccurranceDescendingComparator(key));
+            => array.Sort(new SortingByOccurrenceDescendingComparator(key));
 
         [Test]
         public void Sort_EmptyArray_ThrowArgumentException()
         {
             string[] array = new string[] { };
-            Assert.Throws<ArgumentException>(() => array.Sort(new SortingByOccurranceDescendingComparator('u')));
+            Assert.Throws<ArgumentException>(() => array.Sort(new SortingByOccurrenceDescendingComparator('u')));
         }
 
         [Test]
         public void Sort_ArrayIsNull_ThrowArgumentNullException()
         {
             string[] array = null;
-            Assert.Throws<ArgumentNullException>(() => array.Sort(new SortingByOccurranceDescendingComparator('u')));
+            Assert.Throws<ArgumentNullException>(() => array.Sort(new SortingByOccurrenceDescendingComparator('u')));
         }
+
+        [TestCase(new double[] { 0, -9, -8.87, 6 }, ExpectedResult = new string[] { "zero", "minus nine", "minus eight point eight seven", "six" })]
+        [TestCase(new double[] { double.NaN, double.NegativeInfinity, 8.8 }, ExpectedResult = new string[] { "not a number", "negative infinity", "eight point eight"})]
+        [TestCase(new double[] { 3.006, 328, 5, 90, double.PositiveInfinity }, ExpectedResult = new string[] { "three point zero zero six", "three two eight", "five", "nine zero", "positive infinity" })]
+        public string[] TransformatorEngTest(double[] array)
+            => array.Transform(new TransformatorEng());
+
+        [TestCase(new double[] { 0, -9, -8.87, 6 }, ExpectedResult = new string[] { "ноль", "минус девять", "минус восемь точка восемь семь", "шесть" })]
+        [TestCase(new double[] { double.NaN, double.NegativeInfinity, 8.8 }, ExpectedResult = new string[] { "не число", "минус бесконечность", "восемь точка восемь" })]
+        [TestCase(new double[] { 3.006, 328, 5, 90, double.PositiveInfinity }, ExpectedResult = new string[] { "три точка ноль ноль шесть", "три два восемь", "пять", "девять ноль", "плюс бесконечность" })]
+        public string[] TransformatorRuTest(double[] array)
+            => array.Transform(new TransformatorRu());
     }
 }

@@ -1,4 +1,4 @@
-Tasks (deadline - 03.04.2019, 24.00) - 1 task done
+Tasks (deadline - 03.04.2019, 24.00) - all done (task 2 in process of changing)
 
 ѕри решении задач делегаты не использовать!
 

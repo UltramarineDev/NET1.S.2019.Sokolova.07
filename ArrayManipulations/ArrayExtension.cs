@@ -81,7 +81,26 @@ namespace ArrayManipulations
                     }
                 }
             }
+
             return array;
+        }
+
+        /// <summary>
+        /// Method transform double numbers to written equivalent
+        /// </summary>
+        /// <param name="array">array of doubles</param>
+        /// <param name="transformer">parameter of type Transformer</param>
+        /// <returns>array of strings</returns>
+        public static string[] Transform(this double[] array, Transformer transformer)
+        {
+            var resultStringArray = new string[array.Length];
+
+            for (int i = 0; i < array.Length; i++)
+            {
+                resultStringArray[i] = transformer.TransformToWords(array[i]);
+            }
+
+            return resultStringArray;
         }
     }
 
@@ -261,12 +280,12 @@ namespace ArrayManipulations
     public abstract class NumberOfOccurrances
     {
         /// <summary>
-        /// Method calculate the number of occurrances
+        /// Method calculate the number of occurrences
         /// </summary>
         /// <param name="item">input string</param>
         /// <param name="symbol">char symbol</param>
-        /// <returns>integer number of occurrances</returns>
-        protected int FindNumberOfOccurrances(string item, char symbol)
+        /// <returns>integer number of occurrences</returns>
+        protected int FindNumberOfOccurrences(string item, char symbol)
         {
             int occurranceNumber = 0;
 
@@ -283,23 +302,23 @@ namespace ArrayManipulations
     }
 
     /// <summary>
-    /// SortingByOccurranceComparator class with implementation of IComparator interface and NumberOfOccurrances class
+    /// SortingByOccurrenceComparator class with implementation of IComparator interface and NumberOfOccurrences class
     /// </summary>
-    public class SortingByOccurranceComparator : NumberOfOccurrances, IComparator
+    public class SortingByOccurrenceComparator : NumberOfOccurrances, IComparator
     {
+        /// <summary>
+        /// Initializes a new instance of the SortingByOccurrenceComparator class
+        /// </summary>
+        /// <param name="symbol">input symbol</param>
+        public SortingByOccurrenceComparator(char symbol)
+        {
+            this.Symbol = symbol;
+        }
+
         /// <summary>
         /// Gets or sets the value of symbol
         /// </summary>
         public char Symbol { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the SortingByOccurranceComparator class
-        /// </summary>
-        /// <param name="symbol">input symbol</param>
-        public SortingByOccurranceComparator(char symbol)
-        {
-            this.Symbol = symbol;
-        }
 
         /// <summary>
         /// Method compares numbers of occurrences of two strings
@@ -309,19 +328,19 @@ namespace ArrayManipulations
         /// <returns>integer value</returns>
         public int Compare(string first, string second)
         {
-            if (this.FindNumberOfOccurrances(first, this.Symbol) == this.FindNumberOfOccurrances(second, this.Symbol))
+            if (this.FindNumberOfOccurrences(first, this.Symbol) == this.FindNumberOfOccurrences(second, this.Symbol))
             {
                 return 0;
             }
 
-            return this.FindNumberOfOccurrances(first, this.Symbol) > this.FindNumberOfOccurrances(second, this.Symbol) ? 1 : -1;
+            return this.FindNumberOfOccurrences(first, this.Symbol) > this.FindNumberOfOccurrences(second, this.Symbol) ? 1 : -1;
         }
     }
 
     /// <summary>
-    /// SortingByOccurranceDescendingComparator class with implementation of IComparator interface and NumberOfOccurrances class
+    /// SortingByOccurranceDescendingComparator class with implementation of IComparator interface and NumberOfOccurrences class
     /// </summary>
-    public class SortingByOccurranceDescendingComparator : NumberOfOccurrances, IComparator
+    public class SortingByOccurrenceDescendingComparator : NumberOfOccurrances, IComparator
     {
         /// <summary>
         /// Gets or sets the value of symbol
@@ -332,7 +351,7 @@ namespace ArrayManipulations
         /// Initializes a new instance of the SortingByOccurranceComparator class
         /// </summary>
         /// <param name="symbol">input symbol</param>
-        public SortingByOccurranceDescendingComparator(char symbol)
+        public SortingByOccurrenceDescendingComparator(char symbol)
         {
             this.Symbol = symbol;
         }
@@ -345,12 +364,121 @@ namespace ArrayManipulations
         /// <returns>integer value</returns>
         public int Compare(string first, string second)
         {
-            if (this.FindNumberOfOccurrances(first, this.Symbol) == this.FindNumberOfOccurrances(second, this.Symbol))
+            if (this.FindNumberOfOccurrences(first, this.Symbol) == this.FindNumberOfOccurrences(second, this.Symbol))
             {
                 return 0;
             }
 
-            return this.FindNumberOfOccurrances(first, this.Symbol) > this.FindNumberOfOccurrances(second, this.Symbol) ? -1 : 1;
+            return this.FindNumberOfOccurrences(first, this.Symbol) > this.FindNumberOfOccurrences(second, this.Symbol) ? -1 : 1;
         }
     }
+
+    /// <summary>
+    /// abstract class Transformer
+    /// </summary>
+    public abstract class Transformer
+    {
+        /// <summary>
+        /// Method of Transforming double
+        /// </summary>
+        /// <param name="number">input double</param>
+        /// <returns>string representation</returns>
+        public string TransformToWords(double number)
+        {
+            Dictionary<double, string> specialCases = GetSpecialDoubles();
+
+            if (specialCases.TryGetValue(number, out string result))
+            {
+                return result;
+            }
+
+            Dictionary<char, string> words = GetWords();
+
+            return GetWordRepresentation(number, words);
+        }
+
+        protected abstract Dictionary<char, string> GetWords();
+
+        protected abstract Dictionary<double, string> GetSpecialDoubles();
+
+        private static string GetWordRepresentation(double number, Dictionary<char, string> dictionary)
+        {
+            string stringRepresentation = number.ToString(CultureInfo.InvariantCulture);
+            var verbalPresentation = new StringBuilder();
+
+            foreach (var s in stringRepresentation)
+            {
+                verbalPresentation.Append($"{dictionary[s]} ");
+            }
+
+            return verbalPresentation.ToString().TrimEnd();
+        }
+    }
+
+    /// <summary>
+    /// Class TransformatorEng
+    /// </summary>
+    public class TransformatorEng : Transformer
+    {
+        protected override Dictionary<char, string> GetWords() => new Dictionary<char, string>
+        {
+            ['0'] = "zero",
+            ['1'] = "one",
+            ['2'] = "two",
+            ['3'] = "three",
+            ['4'] = "four",
+            ['5'] = "five",
+            ['6'] = "six",
+            ['7'] = "seven",
+            ['8'] = "eight",
+            ['9'] = "nine",
+            ['-'] = "minus",
+            ['+'] = "plus",
+            ['.'] = "point",
+            [','] = "comma",
+            ['E'] = "exponent",
+            ['e'] = "exponent"
+        };
+
+        protected override Dictionary<double, string> GetSpecialDoubles() => new Dictionary<double, string>
+        {
+            [double.NaN] = "not a number",
+            [double.NegativeInfinity] = "negative infinity",
+            [double.PositiveInfinity] = "positive infinity"
+        };
+    }
+
+    /// <summary>
+    /// Class TransformatorRu
+    /// </summary>
+    public class TransformatorRu : Transformer
+    {
+        protected override Dictionary<char, string> GetWords() => new Dictionary<char, string>
+        {
+            ['0'] = "ноль",
+            ['1'] = "один",
+            ['2'] = "два",
+            ['3'] = "три",
+            ['4'] = "четыре",
+            ['5'] = "пять",
+            ['6'] = "шесть",
+            ['7'] = "семь",
+            ['8'] = "восемь",
+            ['9'] = "девять",
+            ['-'] = "минус",
+            ['+'] = "плюс",
+            ['.'] = "точка",
+            [','] = "запятая",
+            ['E'] = "экспонента",
+            ['e'] = "экспонента"
+        };
+
+        protected override Dictionary<double, string> GetSpecialDoubles() => new Dictionary<double, string>
+        {
+            [double.NaN] = "не число",
+            [double.NegativeInfinity] = "минус бесконечность",
+            [double.PositiveInfinity] = "плюс бесконечность"
+        };
+    }
+
 }
