@@ -1,31 +1,11 @@
-﻿using System;
+﻿using ArrayManipulations.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
 namespace ArrayManipulations
 {
-    /// <summary>
-    /// Interface represent method FilterByCondition
-    /// </summary>
-    public interface IPredicate
-    {
-        bool IsPredicate(int number);
-    }
-
-    /// <summary>
-    /// Interface tepresent method Compare
-    /// </summary>
-    public interface IComparer
-    {
-        int Compare(string first, string second);
-    }
-
-    public interface ITransformer
-    {
-       string TransformDouble(double number);
-    }
-
     /// <summary>
     /// ArrayExtension class
     /// </summary>
@@ -117,151 +97,140 @@ namespace ArrayManipulations
             return resultStringArray;
         }
 
-        public static void JaggedSort(this int[][] array, )
+        public static void JaggedSort(this int[][] array, IIntComparer comparer)
         {
-
-        }
-    }
-
-    /// <summary>
-    /// Class FilterArrayByKey with implementation of IFilter interface
-    /// </summary>
-    public class FilterArrayByKey : IPredicate
-    {
-        /// <summary>
-        /// Initializes a new instance of the FilterArrayByKey class
-        /// </summary>
-        /// <exception cref="ArgumentException">Thrown if key value in invalid</exception>     
-        public FilterArrayByKey(int key)
-        {
-            Key = key;
-        }
-
-        private int key;
-        /// <summary>
-        /// Gets or sets the value of key
-        /// </summary>
-        public int Key
-        {
-            get
+            for (int i = 0; i < array.Length; i++)
             {
-                return key;
-            }
-
-            set
-            {
-                if (value > 9 || value < 0)
+                if (comparer.Compare(array[i], array[i + 1]) > 0)
                 {
-                    throw new ArgumentException(" Input number is not a digit.", nameof(Key));
-                }
-
-                key = value;
-            }
-        }
-
-        /// <summary>
-        /// Method determines if number contains key value or not
-        /// </summary>
-        /// <param name="number">input number</param>
-        /// <returns>true if number contains key, false - if not</returns>
-        public bool IsPredicate(int number)
-        {
-            while (number != 0)
-            {
-                if (Math.Abs(number % 10) == Key)
-                {
-                    return true;
-                }
-
-                number = number / 10;
-            }
-
-            return false;
-        }
-    }
-
-    /// <summary>
-    /// Class EvenOrOdd with implementation of IFilter interface
-    /// </summary>
-    public class EvenOrOdd : IPredicate
-    {
-        /// <summary>
-        /// Method determines if number is even or odd
-        /// </summary>
-        /// <param name="array">input number</param>
-        /// <returns>true if number is even and false - if odd</returns>
-        public bool IsPredicate(int number)
-        {
-            return number % 2 == 0;
-        }
-    }
-
-    /// <summary>
-    /// Class Palindrome with implementation of IFilter interface
-    /// </summary>
-    public class Palindrome : IPredicate
-    {
-        /// <summary>
-        /// Method determines is number palindrome or not
-        /// </summary>
-        /// <param name="number">input number</param>
-        /// <returns>true if number is palindrome, false - if not</returns>
-        public bool IsPredicate(int number)
-        {
-            string numberInString = number.ToString();
-            for (int i = 0, j = numberInString.Length - 1; i < numberInString.Length; i++, j--)
-            {
-                if (numberInString[i] != numberInString[j])
-                {
-                    return false;
+                    var temp = array[i];
+                    array[i] = array[i];
+                    array[i] = temp;
                 }
             }
-
-            return true;
         }
     }
 
-    /// <summary>
-    /// Class SortingByLengthComparator with implementation of IComparator interface
-    /// </summary>
-    public class SortingByLengthComparator : IComparer
+    public abstract class SumOfElements
     {
-        /// <summary>
-        /// Method compares length two strings
-        /// </summary>
-        /// <param name="first">first string</param>
-        /// <param name="second">second string</param>
-        /// <returns>integer value</returns>
-        public int Compare(string first, string second)
+        protected double Sum(int[] array)
         {
-            if (first.Length == second.Length)
+            double sum = 0;
+            for (int i = 0; i < array.Length; i++)
+            {
+                sum += array[i];
+            }
+
+            return sum;
+        }
+    }
+
+    public class AscendingBySumSorter : SumOfElements, IIntComparer
+    {
+        public int Compare(int[] first, int[] second)
+        {
+            if (Sum(first) == Sum(second))
             {
                 return 0;
             }
 
-            return first.Length > second.Length ? 1 : -1;
+            return Sum(first) > Sum(second) ? 1 : -1;
         }
     }
 
-    /// <summary>
-    /// SortingByLengthDescendingComparator with implementation of IComparator interface
-    /// </summary>
-    public class SortingByLengthDescendingComparator : IComparer
+    public class DescendingBySumSorter : SumOfElements, IIntComparer
     {
-        /// <summary>
-        /// Method compares length two strings
-        /// </summary>
-        /// <param name="first">first string</param>
-        /// <param name="second">second string</param>
-        /// <returns>integer value</returns>
-        public int Compare(string first, string second)
+        public int Compare(int[] first, int[] second)
         {
-            if (first.Length == second.Length)
+            if (Sum(first) == Sum(second))
             {
                 return 0;
             }
 
-            return first.Length > second.Length ? -1 : 1;
+            return Sum(first) > Sum(second) ? -1 : 1;
+        }
+    }
+
+    public abstract class MaxMinElement
+    {
+        public int FindMax(int[] array)
+        {
+            int max = array[0];
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] > max)
+                {
+                    max = array[i];
+                }
+            }
+
+            return max;
+        }
+
+        public int FindMin(int[] array)
+        {
+            int min = array[0];
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (array[i] < min)
+                {
+                    min = array[i];
+                }
+            }
+
+            return min;
+        }
+    }
+
+    public class AscendingByMaxSorter : MaxMinElement, IIntComparer
+    {
+        public int Compare(int[] first, int[] second)
+        {
+            if (FindMax(first) == FindMax(second))
+            {
+                return 0;
+            }
+
+            return FindMax(first) > FindMax(second) ? 1 : -1;
+        }
+    }
+
+    public class DescendingByMaxSorter : MaxMinElement, IIntComparer
+    {
+        public int Compare(int[] first, int[] second)
+        {
+            if (FindMax(first) == FindMax(second))
+            {
+                return 0;
+            }
+
+            return FindMax(first) > FindMax(second) ? -1 : 1;
+        }
+    }
+
+    public class AscendingByMinSorter : MaxMinElement, IIntComparer
+    {
+        public int Compare(int[] first, int[] second)
+        {
+            if (FindMin(first) == FindMin(second))
+            {
+                return 0;
+            }
+
+            return FindMin(first) > FindMin(second) ? 1 : -1;
+        }
+    }
+
+    public class DescendingByMinSorter : MaxMinElement, IIntComparer
+    {
+        public int Compare(int[] first, int[] second)
+        {
+            if (FindMin(first) == FindMin(second))
+            {
+                return 0;
+            }
+
+            return FindMin(first) > FindMin(second) ? -1 : 1;
         }
     }
 
@@ -291,187 +260,4 @@ namespace ArrayManipulations
             return occurranceNumber;
         }
     }
-
-    /// <summary>
-    /// SortingByOccurrenceComparator class with implementation of IComparator interface and NumberOfOccurrences class
-    /// </summary>
-    public class SortingByOccurrenceComparator : NumberOfOccurrances, IComparer
-    {
-        /// <summary>
-        /// Initializes a new instance of the SortingByOccurrenceComparator class
-        /// </summary>
-        /// <param name="symbol">input symbol</param>
-        public SortingByOccurrenceComparator(char symbol)
-        {
-            this.Symbol = symbol;
-        }
-
-        /// <summary>
-        /// Gets or sets the value of symbol
-        /// </summary>
-        public char Symbol { get; set; }
-
-        /// <summary>
-        /// Method compares numbers of occurrences of two strings
-        /// </summary>
-        /// <param name="first">first string</param>
-        /// <param name="second">second string</param>
-        /// <returns>integer value</returns>
-        public int Compare(string first, string second)
-        {
-            if (this.FindNumberOfOccurrences(first, this.Symbol) == this.FindNumberOfOccurrences(second, this.Symbol))
-            {
-                return 0;
-            }
-
-            return this.FindNumberOfOccurrences(first, this.Symbol) > this.FindNumberOfOccurrences(second, this.Symbol) ? 1 : -1;
-        }
-    }
-
-    /// <summary>
-    /// SortingByOccurranceDescendingComparator class with implementation of IComparator interface and NumberOfOccurrences class
-    /// </summary>
-    public class SortingByOccurrenceDescendingComparator : NumberOfOccurrances, IComparer
-    {
-        /// <summary>
-        /// Gets or sets the value of symbol
-        /// </summary>
-        public char Symbol { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the SortingByOccurranceComparator class
-        /// </summary>
-        /// <param name="symbol">input symbol</param>
-        public SortingByOccurrenceDescendingComparator(char symbol)
-        {
-            this.Symbol = symbol;
-        }
-
-        /// <summary>
-        /// Method compares numbers of occurrences of two strings
-        /// </summary>
-        /// <param name="first">first string</param>
-        /// <param name="second">second string</param>
-        /// <returns>integer value</returns>
-        public int Compare(string first, string second)
-        {
-            if (this.FindNumberOfOccurrences(first, this.Symbol) == this.FindNumberOfOccurrences(second, this.Symbol))
-            {
-                return 0;
-            }
-
-            return this.FindNumberOfOccurrences(first, this.Symbol) > this.FindNumberOfOccurrences(second, this.Symbol) ? -1 : 1;
-        }
-    }
-
-    /// <summary>
-    /// abstract class Transformer
-    /// </summary>
-    public abstract class Transformer : ITransformer
-    {
-        /// <summary>
-        /// Method of Transforming double
-        /// </summary>
-        /// <param name="number">input double</param>
-        /// <returns>string representation</returns>
-        public string TransformDouble(double number)
-        {
-            Dictionary<double, string> specialCases = GetSpecialDoubles();
-
-            if (specialCases.TryGetValue(number, out string result))
-            {
-                return result;
-            }
-
-            Dictionary<char, string> words = GetWords();
-
-            return GetWordRepresentation(number, words);
-        }
-
-        protected abstract Dictionary<char, string> GetWords();
-
-        protected abstract Dictionary<double, string> GetSpecialDoubles();
-
-        private static string GetWordRepresentation(double number, Dictionary<char, string> dictionary)
-        {
-            string stringRepresentation = number.ToString(CultureInfo.InvariantCulture);
-            var verbalPresentation = new StringBuilder();
-
-            foreach (var s in stringRepresentation)
-            {
-                verbalPresentation.Append($"{dictionary[s]} ");
-            }
-
-            return verbalPresentation.ToString().TrimEnd();
-        }
-    }
-
-    /// <summary>
-    /// Class TransformatorEng
-    /// </summary>
-    public class TransformatorEng : Transformer
-    {
-        protected override Dictionary<char, string> GetWords() => new Dictionary<char, string>
-        {
-            ['0'] = "zero",
-            ['1'] = "one",
-            ['2'] = "two",
-            ['3'] = "three",
-            ['4'] = "four",
-            ['5'] = "five",
-            ['6'] = "six",
-            ['7'] = "seven",
-            ['8'] = "eight",
-            ['9'] = "nine",
-            ['-'] = "minus",
-            ['+'] = "plus",
-            ['.'] = "point",
-            [','] = "comma",
-            ['E'] = "exponent",
-            ['e'] = "exponent"
-        };
-
-        protected override Dictionary<double, string> GetSpecialDoubles() => new Dictionary<double, string>
-        {
-            [double.NaN] = "not a number",
-            [double.NegativeInfinity] = "negative infinity",
-            [double.PositiveInfinity] = "positive infinity"
-        };
-    }
-
-    /// <summary>
-    /// Class TransformatorRu
-    /// </summary>
-    public class TransformatorRu : Transformer
-    {
-        protected override Dictionary<char, string> GetWords() => new Dictionary<char, string>
-        {
-            ['0'] = "ноль",
-            ['1'] = "один",
-            ['2'] = "два",
-            ['3'] = "три",
-            ['4'] = "четыре",
-            ['5'] = "пять",
-            ['6'] = "шесть",
-            ['7'] = "семь",
-            ['8'] = "восемь",
-            ['9'] = "девять",
-            ['-'] = "минус",
-            ['+'] = "плюс",
-            ['.'] = "точка",
-            [','] = "запятая",
-            ['E'] = "экспонента",
-            ['e'] = "экспонента"
-        };
-
-        protected override Dictionary<double, string> GetSpecialDoubles() => new Dictionary<double, string>
-        {
-            [double.NaN] = "не число",
-            [double.NegativeInfinity] = "минус бесконечность",
-            [double.PositiveInfinity] = "плюс бесконечность"
-        };
-    }
-
-    //public class TransformToBits
-
 }

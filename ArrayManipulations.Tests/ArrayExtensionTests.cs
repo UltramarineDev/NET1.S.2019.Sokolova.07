@@ -102,5 +102,7 @@ namespace ArrayManipulations.Tests
         [TestCase(new double[] { 3.006, 328, 5, 90, double.PositiveInfinity }, ExpectedResult = new string[] { "три точка ноль ноль шесть", "три два восемь", "пять", "девять ноль", "плюс бесконечность" })]
         public string[] TransformatorRuTest(double[] array)
             => array.Transform(new TransformatorRu());
+
+        [TestCase(new int[][] {})]
     }
 }

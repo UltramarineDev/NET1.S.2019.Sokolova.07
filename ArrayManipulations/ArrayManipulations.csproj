@@ -41,7 +41,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArrayExtension.cs" />
+    <Compile Include="Filter\EvenOrOdd.cs" />
+    <Compile Include="Filter\FilterArrayByKey.cs" />
+    <Compile Include="Filter\Palindrome.cs" />
+    <Compile Include="Interfaces\IComparer.cs" />
+    <Compile Include="Interfaces\IIntComparer.cs" />
+    <Compile Include="Interfaces\IPredicate.cs" />
+    <Compile Include="Interfaces\ITransformer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sort\SortingByLengthComparator.cs" />
+    <Compile Include="Sort\SortingByLengthDescendingComparator.cs" />
+    <Compile Include="Sort\SortingByOccurrenceComparator.cs" />
+    <Compile Include="Sort\SortingByOccurrenceDescendingComparator.cs" />
+    <Compile Include="Transform\TransformatorEng.cs" />
+    <Compile Include="Transform\TransformatorRu.cs" />
+    <Compile Include="Transform\Transformer.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
