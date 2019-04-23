@@ -1,8 +1,6 @@
 ﻿using ArrayManipulations.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 
 namespace ArrayManipulations
 {
@@ -97,6 +95,11 @@ namespace ArrayManipulations
             return resultStringArray;
         }
 
+        /// <summary>
+        /// Method sort jagged array
+        /// </summary>
+        /// <param name="array">input array</param>
+        /// <param name="comparer">parameter of type IIntComparer</param>
         public static void JaggedSort(this int[][] array, IIntComparer comparer)
         {
             for (int i = 0; i < array.Length; i++)
@@ -108,156 +111,6 @@ namespace ArrayManipulations
                     array[i] = temp;
                 }
             }
-        }
-    }
-
-    public abstract class SumOfElements
-    {
-        protected double Sum(int[] array)
-        {
-            double sum = 0;
-            for (int i = 0; i < array.Length; i++)
-            {
-                sum += array[i];
-            }
-
-            return sum;
-        }
-    }
-
-    public class AscendingBySumSorter : SumOfElements, IIntComparer
-    {
-        public int Compare(int[] first, int[] second)
-        {
-            if (Sum(first) == Sum(second))
-            {
-                return 0;
-            }
-
-            return Sum(first) > Sum(second) ? 1 : -1;
-        }
-    }
-
-    public class DescendingBySumSorter : SumOfElements, IIntComparer
-    {
-        public int Compare(int[] first, int[] second)
-        {
-            if (Sum(first) == Sum(second))
-            {
-                return 0;
-            }
-
-            return Sum(first) > Sum(second) ? -1 : 1;
-        }
-    }
-
-    public abstract class MaxMinElement
-    {
-        public int FindMax(int[] array)
-        {
-            int max = array[0];
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (array[i] > max)
-                {
-                    max = array[i];
-                }
-            }
-
-            return max;
-        }
-
-        public int FindMin(int[] array)
-        {
-            int min = array[0];
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (array[i] < min)
-                {
-                    min = array[i];
-                }
-            }
-
-            return min;
-        }
-    }
-
-    public class AscendingByMaxSorter : MaxMinElement, IIntComparer
-    {
-        public int Compare(int[] first, int[] second)
-        {
-            if (FindMax(first) == FindMax(second))
-            {
-                return 0;
-            }
-
-            return FindMax(first) > FindMax(second) ? 1 : -1;
-        }
-    }
-
-    public class DescendingByMaxSorter : MaxMinElement, IIntComparer
-    {
-        public int Compare(int[] first, int[] second)
-        {
-            if (FindMax(first) == FindMax(second))
-            {
-                return 0;
-            }
-
-            return FindMax(first) > FindMax(second) ? -1 : 1;
-        }
-    }
-
-    public class AscendingByMinSorter : MaxMinElement, IIntComparer
-    {
-        public int Compare(int[] first, int[] second)
-        {
-            if (FindMin(first) == FindMin(second))
-            {
-                return 0;
-            }
-
-            return FindMin(first) > FindMin(second) ? 1 : -1;
-        }
-    }
-
-    public class DescendingByMinSorter : MaxMinElement, IIntComparer
-    {
-        public int Compare(int[] first, int[] second)
-        {
-            if (FindMin(first) == FindMin(second))
-            {
-                return 0;
-            }
-
-            return FindMin(first) > FindMin(second) ? -1 : 1;
-        }
-    }
-
-    /// <summary>
-    /// Abstract class NumberOfOccurrances
-    /// </summary>
-    public abstract class NumberOfOccurrances
-    {
-        /// <summary>
-        /// Method calculate the number of occurrences
-        /// </summary>
-        /// <param name="item">input string</param>
-        /// <param name="symbol">char symbol</param>
-        /// <returns>integer number of occurrences</returns>
-        protected int FindNumberOfOccurrences(string item, char symbol)
-        {
-            int occurranceNumber = 0;
-
-            for (int i = 0; i < item.Length; i++)
-            {
-                if (item[i] == symbol)
-                {
-                    occurranceNumber += 1;
-                }
-            }
-
-            return occurranceNumber;
         }
     }
 }

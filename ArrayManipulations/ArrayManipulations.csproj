@@ -48,6 +48,15 @@
     <Compile Include="Interfaces\IIntComparer.cs" />
     <Compile Include="Interfaces\IPredicate.cs" />
     <Compile Include="Interfaces\ITransformer.cs" />
+    <Compile Include="JaggedSort\AscendingByMaxSorter.cs" />
+    <Compile Include="JaggedSort\AscendingByMinSorter.cs" />
+    <Compile Include="JaggedSort\AscendingBySumSorter.cs" />
+    <Compile Include="JaggedSort\DescendingByMaxSorter.cs" />
+    <Compile Include="JaggedSort\DescendingByMinSorter.cs" />
+    <Compile Include="JaggedSort\DescendingBySumSorter.cs" />
+    <Compile Include="JaggedSort\MaxMinElement.cs" />
+    <Compile Include="JaggedSort\NumberOfOccurrances.cs" />
+    <Compile Include="JaggedSort\SumOfElements.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sort\SortingByLengthComparator.cs" />
     <Compile Include="Sort\SortingByLengthDescendingComparator.cs" />
