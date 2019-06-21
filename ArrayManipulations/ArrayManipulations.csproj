@@ -47,11 +47,5 @@
     <Compile Include="Interfaces\ITransformer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Test-cases\Test-cases.csproj">
-      <Project>{75ab9a7e-69c1-40ad-b281-87692d05eb59}</Project>
-      <Name>Test-cases</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

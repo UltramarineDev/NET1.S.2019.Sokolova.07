@@ -1,7 +1,7 @@
-﻿using ArrayManipulations.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using ArrayManipulations.Interfaces;
 
 namespace Test_cases.Transform
 {
@@ -46,5 +46,4 @@ namespace Test_cases.Transform
             return resultString.ToString().TrimEnd();
         }
     }
-
 }

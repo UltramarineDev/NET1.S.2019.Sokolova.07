@@ -1,9 +1,9 @@
-﻿namespace Test_cases.JaggedSort
+﻿namespace Test_cases.Sort
 {
     /// <summary>
-    /// Abstract class NumberOfOccurrances
+    /// Abstract class NumberOfOccurrences
     /// </summary>
-    public abstract class NumberOfOccurrances
+    public abstract class NumberOfOccurrences
     {
         /// <summary>
         /// Method calculate the number of occurrences

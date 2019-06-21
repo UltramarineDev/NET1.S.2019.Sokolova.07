@@ -1,23 +1,25 @@
-﻿namespace Test_cases.Sort
+﻿using ArrayManipulations.Interfaces;
+
+namespace Test_cases.Sort
 {
     /// <summary>
-    /// SortingByOccurranceDescendingComparator class with implementation of IComparator interface and NumberOfOccurrences class
+    /// SortingByOccurrenceDescendingComparator class with implementation of IComparator interface and NumberOfOccurrences class
     /// </summary>
-    public class SortingByOccurrenceDescendingComparator : NumberOfOccurrances, IComparer
+    public class SortingByOccurrenceDescendingComparator : NumberOfOccurrences, IComparer
     {
         /// <summary>
-        /// Gets or sets the value of symbol
-        /// </summary>
-        public char Symbol { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the SortingByOccurranceComparator class
+        /// Initializes a new instance of the SortingByOccurrenceComparator class
         /// </summary>
         /// <param name="symbol">input symbol</param>
         public SortingByOccurrenceDescendingComparator(char symbol)
         {
             this.Symbol = symbol;
         }
+
+        /// <summary>
+        /// Gets or sets the value of symbol
+        /// </summary>
+        public char Symbol { get; set; }
 
         /// <summary>
         /// Method compares numbers of occurrences of two strings

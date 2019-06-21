@@ -8,6 +8,8 @@ namespace Test_cases.Filter
     /// </summary>
     public class FilterArrayByKey : IPredicate
     {
+       private byte key;
+
         /// <summary>
         /// Initializes a new instance of the FilterArrayByKey class
         /// </summary>
@@ -17,7 +19,6 @@ namespace Test_cases.Filter
             Key = key;
         }
 
-        private byte key;
         /// <summary>
         /// Gets or sets the value of key
         /// </summary>
@@ -48,7 +49,7 @@ namespace Test_cases.Filter
         {
             while (number != 0)
             {
-                if (Math.Abs(number % 10) == Key)//не пойдет для min.value! 
+                if (Math.Abs(number % 10) == Key)
                 {
                     return true;
                 }

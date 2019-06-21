@@ -1,8 +1,8 @@
-﻿using ArrayManipulations.Filter;
-using ArrayManipulations.Sort;
-using ArrayManipulations.Transform;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System;
+using Test_cases.Filter;
+using Test_cases.Sort;
+using Test_cases.Transform;
 
 namespace ArrayManipulations.Tests
 {
@@ -14,14 +14,13 @@ namespace ArrayManipulations.Tests
         [TestCase(new int[] { 3, 315, 9, 0, 45, 0, 32, -98, -535 }, 3, ExpectedResult = new int[] { 3, 315, 32, -535 })]
         [TestCase(new int[] { 14, 64, 98, 0, -3, 87, 43, 64, 99, 52, 87 }, 4, ExpectedResult = new int[] { 14, 64, 43, 64 })]
         [TestCase(new int[] { 6, 76, 87, 09, -546, 6, 76, 0, 0, 3 }, 1, ExpectedResult = new int[] { })]
-        public int[] FilterArrayByKeyTest(int[] array, int key)
+        public int[] FilterArrayByKeyTest(int[] array, byte key)
         => array.Filter(new FilterArrayByKey(key));
 
         [Test]
         public void FilterArrayByKey_InvalidKey_ThrowArgumentException()
         {
             Assert.Throws<ArgumentException>(() => new FilterArrayByKey(15));
-            Assert.Throws<ArgumentException>(() => new FilterArrayByKey(-15));
         }
 
         [Test]
@@ -52,6 +51,7 @@ namespace ArrayManipulations.Tests
         public int[] PalindromeTest(int[] array)
             => array.Filter(new Palindrome());
         #endregion
+
         #region Sort tests
         [TestCase((object)new string[] { "none", "word", "words", "testcase", "cod", "common", "access", "clock" },
             ExpectedResult = new string[] { "cod", "none", "word", "words", "clock", "common", "access", "testcase" })]
@@ -96,6 +96,7 @@ namespace ArrayManipulations.Tests
             Assert.Throws<ArgumentNullException>(() => array.Sort(new SortingByOccurrenceDescendingComparator('u')));
         }
         #endregion
+
         #region Transform tests
         [TestCase(new double[] { 0, -9, -8.87, 6 }, ExpectedResult = new string[] { "zero", "minus nine", "minus eight point eight seven", "six" })]
         [TestCase(new double[] { double.NaN, double.NegativeInfinity, 8.8 }, ExpectedResult = new string[] { "not a number", "negative infinity", "eight point eight"})]
@@ -110,7 +111,19 @@ namespace ArrayManipulations.Tests
         public string[] TransformatorRuTest(double[] array)
             => array.Transform(new TransformatorRu());
 
+        [Test]
+        public void Transform_EmptyArray_ThrowArgumentException()
+        {
+            double[] array = new double[] { };
+            Assert.Throws<ArgumentException>(() => array.Transform(new TransformatorEng()));
+        }
 
+        [Test]
+        public void Transform_ArrayIsNull_ThrowArgumentNullException()
+        {
+            double[] array = null;
+            Assert.Throws<ArgumentNullException>(() => array.Transform(new TransformatorRu()));
+        }
         #endregion
     }
 }

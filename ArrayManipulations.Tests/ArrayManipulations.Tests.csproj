@@ -58,6 +58,10 @@
       <Project>{98d3c854-954a-43f1-9aea-a226320cea6b}</Project>
       <Name>ArrayManipulations</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Test-cases\Test-cases.csproj">
+      <Project>{75ab9a7e-69c1-40ad-b281-87692d05eb59}</Project>
+      <Name>Test-cases</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -1,15 +1,15 @@
 ﻿namespace ArrayManipulations.Interfaces
 {
     /// <summary>
-    /// Interface represent method FilterByCondition
+    /// Interface represents method FilterByCondition
     /// </summary>
     public interface IPredicate
     {
         /// <summary>
-        /// condition method
+        /// Condition method
         /// </summary>
         /// <param name="number">input integer number</param>
-        /// <returns>true if condition os correct, false otherwise</returns>
+        /// <returns>true if condition is correct, false otherwise</returns>
         bool IsPredicate(int number);
     }
 }

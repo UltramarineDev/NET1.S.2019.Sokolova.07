@@ -92,6 +92,16 @@ namespace ArrayManipulations
         /// <returns>array of strings</returns>
         public static string[] Transform(this double[] array, ITransformer transformer)
         {
+            if (array == null)
+            {
+                throw new ArgumentNullException(nameof(array), "Source array can not be null.");
+            }
+
+            if (array.Length == 0)
+            {
+                throw new ArgumentException("Source array can not be empty.", nameof(array));
+            }
+
             var resultStringArray = new string[array.Length];
 
             for (int i = 0; i < array.Length; i++)

@@ -1,9 +1,11 @@
-﻿namespace Test_cases.Sort
+﻿using ArrayManipulations.Interfaces;
+
+namespace Test_cases.Sort
 {
     /// <summary>
     /// SortingByOccurrenceComparator class with implementation of IComparator interface and NumberOfOccurrences class
     /// </summary>
-    public class SortingByOccurrenceComparator : NumberOfOccurrances, IComparer
+    public class SortingByOccurrenceComparator : NumberOfOccurrences, IComparer
     {
         /// <summary>
         /// Initializes a new instance of the SortingByOccurrenceComparator class

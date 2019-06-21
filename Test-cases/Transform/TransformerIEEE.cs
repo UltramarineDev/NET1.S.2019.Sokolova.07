@@ -2,6 +2,9 @@
 
 namespace Test_cases.Transform
 {
+    /// <summary>
+    /// Initial Transform class (from day 4)
+    /// </summary>
     public static class TransformerIEEE
     {
         // <summary>
@@ -35,6 +38,7 @@ namespace Test_cases.Transform
             private double double64bit;
 
             public long LongBitsForm => long64bit;
+            
             public double DoubleBitsForm
             {
                 set => double64bit = value;
