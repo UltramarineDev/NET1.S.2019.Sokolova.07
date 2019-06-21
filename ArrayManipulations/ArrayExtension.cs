@@ -61,16 +61,23 @@ namespace ArrayManipulations
                 throw new ArgumentException("Source array can not be empty.", nameof(array));
             }
 
-            for (int i = 0; i < array.Length; i++)
+            bool swapped = true;
+            while (swapped)
             {
-                for (int j = 0; j < array.Length - i - 1; j++)
+                swapped = false;
+
+                int i = 0;
+                while (i < array.Length - 1)
                 {
-                    if (comparator.Compare(array[j], array[j + 1]) > 0)
+                    if (comparator.Compare(array[i], array[i + 1]) > 0)
                     {
-                        string temp = array[j];
-                        array[j] = array[j + 1];
-                        array[j + 1] = temp;
+                        string temp = array[i];
+                        array[i] = array[i + 1];
+                        array[i + 1] = temp;
+                        swapped = true;
                     }
+
+                    i++;
                 }
             }
 
