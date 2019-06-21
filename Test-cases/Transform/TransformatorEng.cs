@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ArrayManipulations.Transform
+namespace Test_cases.Transform
 {
     /// <summary>
     /// Class TransformatorEng

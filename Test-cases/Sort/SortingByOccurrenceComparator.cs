@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArrayManipulations.Sort
+﻿namespace Test_cases.Sort
 {
     /// <summary>
     /// SortingByOccurrenceComparator class with implementation of IComparator interface and NumberOfOccurrences class

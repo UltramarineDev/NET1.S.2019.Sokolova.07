@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArrayManipulations.Sort
+﻿namespace Test_cases.Sort
 {
     /// <summary>
     /// SortingByLengthDescendingComparator with implementation of IComparator interface
     /// </summary>
-    public class SortingByLengthDescendingComparator : IComparer
+    public class SortingByLengthDescendingComparator : ArrayManipulations.Interfaces.IComparer
     {
         /// <summary>
         /// Method compares length two strings

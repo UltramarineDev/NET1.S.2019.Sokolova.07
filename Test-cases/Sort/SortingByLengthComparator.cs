@@ -1,11 +1,9 @@
-﻿using System.Collections;
-
-namespace ArrayManipulations.Sort
+﻿namespace Test_cases.Sort
 {
     /// <summary>
     /// Class SortingByLengthComparator with implementation of IComparator interface
     /// </summary>
-    public class SortingByLengthComparator : IComparer
+    public class SortingByLengthComparator : ArrayManipulations.Interfaces.IComparer
     {
         /// <summary>
         /// Method compares length two strings

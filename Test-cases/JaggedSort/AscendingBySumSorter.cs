@@ -1,8 +1,8 @@
 ﻿using ArrayManipulations.Interfaces;
 
-namespace ArrayManipulations.JaggedSort
+namespace Test_cases.JaggedSort
 {
-    public class DescendingBySumSorter : SumOfElements, IIntComparer
+    public class AscendingBySumSorter : SumOfElements, IIntComparer
     {
         public int Compare(int[] first, int[] second)
         {
@@ -11,7 +11,7 @@ namespace ArrayManipulations.JaggedSort
                 return 0;
             }
 
-            return Sum(first) > Sum(second) ? -1 : 1;
+            return Sum(first) > Sum(second) ? 1 : -1;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using ArrayManipulations.Interfaces;
 
-namespace ArrayManipulations.Filter
+namespace Test_cases.Filter
 {
     /// <summary>
     /// Class Palindrome with implementation of IFilter interface

@@ -1,6 +1,6 @@
 ﻿using ArrayManipulations.Interfaces;
 
-namespace ArrayManipulations.JaggedSort
+namespace Test_cases.JaggedSort
 {
     public class AscendingByMinSorter : MaxMinElement, IIntComparer
     {

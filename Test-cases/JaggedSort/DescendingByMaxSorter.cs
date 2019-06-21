@@ -1,8 +1,8 @@
 ﻿using ArrayManipulations.Interfaces;
 
-namespace ArrayManipulations.JaggedSort
+namespace Test_cases.JaggedSort
 {
-    public class AscendingByMaxSorter : MaxMinElement, IIntComparer
+    public class DescendingByMaxSorter : MaxMinElement, IIntComparer
     {
         public int Compare(int[] first, int[] second)
         {
@@ -11,7 +11,7 @@ namespace ArrayManipulations.JaggedSort
                 return 0;
             }
 
-            return FindMax(first) > FindMax(second) ? 1 : -1;
+            return FindMax(first) > FindMax(second) ? -1 : 1;
         }
     }
 }

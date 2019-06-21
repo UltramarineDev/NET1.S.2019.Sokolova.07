@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{98D3C854-954A-43F1-9AEA-A226320CEA6B}</ProjectGuid>
+    <ProjectGuid>{75AB9A7E-69C1-40AD-B281-87692D05EB59}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ArrayManipulations</RootNamespace>
-    <AssemblyName>ArrayManipulations</AssemblyName>
+    <RootNamespace>Test_cases</RootNamespace>
+    <AssemblyName>Test-cases</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,18 +40,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArrayExtension.cs" />
-    <Compile Include="Interfaces\IComparer.cs" />
-    <Compile Include="Interfaces\IIntComparer.cs" />
-    <Compile Include="Interfaces\IPredicate.cs" />
-    <Compile Include="Interfaces\ITransformer.cs" />
+    <Compile Include="Filter\EvenOrOdd.cs" />
+    <Compile Include="Filter\FilterArrayByKey.cs" />
+    <Compile Include="Filter\Palindrome.cs" />
+    <Compile Include="JaggedSort\AscendingByMaxSorter.cs" />
+    <Compile Include="JaggedSort\AscendingByMinSorter.cs" />
+    <Compile Include="JaggedSort\AscendingBySumSorter.cs" />
+    <Compile Include="JaggedSort\DescendingByMaxSorter.cs" />
+    <Compile Include="JaggedSort\DescendingByMinSorter.cs" />
+    <Compile Include="JaggedSort\DescendingBySumSorter.cs" />
+    <Compile Include="JaggedSort\MaxMinElement.cs" />
+    <Compile Include="JaggedSort\NumberOfOccurrances.cs" />
+    <Compile Include="JaggedSort\SumOfElements.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Test-cases\Test-cases.csproj">
-      <Project>{75ab9a7e-69c1-40ad-b281-87692d05eb59}</Project>
-      <Name>Test-cases</Name>
-    </ProjectReference>
+    <Compile Include="Sort\SortingByLengthComparator.cs" />
+    <Compile Include="Sort\SortingByLengthDescendingComparator.cs" />
+    <Compile Include="Sort\SortingByOccurrenceComparator.cs" />
+    <Compile Include="Sort\SortingByOccurrenceDescendingComparator.cs" />
+    <Compile Include="Transform\AdapterIEEE.cs" />
+    <Compile Include="Transform\TransformatorEng.cs" />
+    <Compile Include="Transform\TransformatorRu.cs" />
+    <Compile Include="Transform\Transformer.cs" />
+    <Compile Include="Transform\TransformerIEEE.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

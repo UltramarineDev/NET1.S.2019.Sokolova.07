@@ -1,4 +1,4 @@
-﻿namespace ArrayManipulations.JaggedSort
+﻿namespace Test_cases.JaggedSort
 {
     /// <summary>
     /// Abstract class NumberOfOccurrances

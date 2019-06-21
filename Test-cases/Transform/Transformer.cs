@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace ArrayManipulations.Transform
+namespace Test_cases.Transform
 {
     /// <summary>
     /// abstract class Transformer
@@ -26,24 +26,24 @@ namespace ArrayManipulations.Transform
 
             Dictionary<char, string> words = GetWords();
 
-            return GetWordRepresentation(number, words);
+            return GetResultWord(number, words);
         }
 
         protected abstract Dictionary<char, string> GetWords();
 
         protected abstract Dictionary<double, string> GetSpecialDoubles();
 
-        private static string GetWordRepresentation(double number, Dictionary<char, string> dictionary)
+        private static string GetResultWord(double number, Dictionary<char, string> dictionary)
         {
-            string stringRepresentation = number.ToString(CultureInfo.InvariantCulture);
-            var verbalPresentation = new StringBuilder();
+            string numberString = number.ToString(CultureInfo.InvariantCulture);
+            var resultString = new StringBuilder();
 
-            foreach (var s in stringRepresentation)
+            foreach (var s in numberString)
             {
-                verbalPresentation.Append($"{dictionary[s]} ");
+                resultString.Append($"{dictionary[s]} ");
             }
 
-            return verbalPresentation.ToString().TrimEnd();
+            return resultString.ToString().TrimEnd();
         }
     }
 

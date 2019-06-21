@@ -1,10 +1,14 @@
-﻿using NUnit.Framework;
+﻿using ArrayManipulations.Filter;
+using ArrayManipulations.Sort;
+using ArrayManipulations.Transform;
+using NUnit.Framework;
 using System;
 
 namespace ArrayManipulations.Tests
 {
     public class ArrayExtensionTests
     {
+        #region Filter tests
         [TestCase(new int[] { 7, 1, 2, 3, 4, 5, 6, 7, 68, 69, 70, 15, 17 }, 7, ExpectedResult = new int[] { 7, 7, 70, 17 })]
         [TestCase(new int[] { -678, 7, 3, 9, 1, 9, -56 }, 0, ExpectedResult = new int[] { })]
         [TestCase(new int[] { 3, 315, 9, 0, 45, 0, 32, -98, -535 }, 3, ExpectedResult = new int[] { 3, 315, 32, -535 })]
@@ -47,7 +51,8 @@ namespace ArrayManipulations.Tests
         [TestCase(new int[] { 60, 80, 990, 1177711 }, ExpectedResult = new int[] { 1177711 })]
         public int[] PalindromeTest(int[] array)
             => array.Filter(new Palindrome());
-
+        #endregion
+        #region Sort tests
         [TestCase((object)new string[] { "none", "word", "words", "testcase", "cod", "common", "access", "clock" },
             ExpectedResult = new string[] { "cod", "none", "word", "words", "clock", "common", "access", "testcase" })]
         [TestCase((object)new string[] { "class", "cl", "c", "", "clas", "clas", "none", "cla" },
@@ -90,12 +95,14 @@ namespace ArrayManipulations.Tests
             string[] array = null;
             Assert.Throws<ArgumentNullException>(() => array.Sort(new SortingByOccurrenceDescendingComparator('u')));
         }
-
+        #endregion
+        #region Transform tests
         [TestCase(new double[] { 0, -9, -8.87, 6 }, ExpectedResult = new string[] { "zero", "minus nine", "minus eight point eight seven", "six" })]
         [TestCase(new double[] { double.NaN, double.NegativeInfinity, 8.8 }, ExpectedResult = new string[] { "not a number", "negative infinity", "eight point eight"})]
         [TestCase(new double[] { 3.006, 328, 5, 90, double.PositiveInfinity }, ExpectedResult = new string[] { "three point zero zero six", "three two eight", "five", "nine zero", "positive infinity" })]
         public string[] TransformatorEngTest(double[] array)
             => array.Transform(new TransformatorEng());
+        
 
         [TestCase(new double[] { 0, -9, -8.87, 6 }, ExpectedResult = new string[] { "ноль", "минус девять", "минус восемь точка восемь семь", "шесть" })]
         [TestCase(new double[] { double.NaN, double.NegativeInfinity, 8.8 }, ExpectedResult = new string[] { "не число", "минус бесконечность", "восемь точка восемь" })]
@@ -103,6 +110,7 @@ namespace ArrayManipulations.Tests
         public string[] TransformatorRuTest(double[] array)
             => array.Transform(new TransformatorRu());
 
-        [TestCase(new int[][] {})]
+
+        #endregion
     }
 }

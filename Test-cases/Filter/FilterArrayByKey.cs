@@ -1,7 +1,7 @@
 ﻿using ArrayManipulations.Interfaces;
 using System;
 
-namespace ArrayManipulations.Filter
+namespace Test_cases.Filter
 {
     /// <summary>
     /// Class FilterArrayByKey with implementation of IFilter interface
@@ -12,16 +12,16 @@ namespace ArrayManipulations.Filter
         /// Initializes a new instance of the FilterArrayByKey class
         /// </summary>
         /// <exception cref="ArgumentException">Thrown if key value in invalid</exception>     
-        public FilterArrayByKey(int key)
+        public FilterArrayByKey(byte key)
         {
             Key = key;
         }
 
-        private int key;
+        private byte key;
         /// <summary>
         /// Gets or sets the value of key
         /// </summary>
-        public int Key
+        public byte Key
         {
             get
             {
@@ -48,7 +48,7 @@ namespace ArrayManipulations.Filter
         {
             while (number != 0)
             {
-                if (Math.Abs(number % 10) == Key)
+                if (Math.Abs(number % 10) == Key)//не пойдет для min.value! 
                 {
                     return true;
                 }
